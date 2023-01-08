@@ -7,9 +7,11 @@ phases:
       # 環境変数の設定
       - AWS_ACCOUNT_ID=226972702386
       - ECR_URI=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
-      - REPOSITORY_URI=${ECR_URI}/cicd-handson-ecr01
-      - CONTAINER_NAME=cicd-container01
-      # コミットハッシュの先頭7桁をタグに利用する
+      # ECRのリポジトリ名を指定
+      - REPOSITORY_URI=${ECR_URI}/xxxxx
+      # dockerのコンテナ名を指定
+      - CONTAINER_NAME=xxxxx
+      # コミットハッシュの先頭7桁をdocker imageのタグに利用する
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
       # ECRログイン
@@ -19,17 +21,19 @@ phases:
   build:
     commands:
       - echo Building the Docker image...
-      - ls
+      # Dockerfileをbuildしてdocker imageを作成
       - docker build -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
 
   post_build:
     commands:
-      - echo Build completed on `date`
+      # buildしたdocker imageをECRにpush
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
+      # デプロイ用の定義ファイル(imagedefinitions.json)を作成
+      # タスク定義のimage urlをpushしたdocker imageに変更する
       - printf '[{"name":"%s","imageUri":"%s"}]' $CONTAINER_NAME $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
   files: imagedefinitions.json
