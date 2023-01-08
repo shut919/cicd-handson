@@ -4,6 +4,6 @@ FROM 'nginx:latest'
 RUN service nginx start
 
 # localのsrc配下をファイルをdockerコンテナ上の/usr/share/nginx/html配下にcopyする。
-COPY src /usr/share/nginx/html/service01
+COPY src /usr/share/nginx/html/
 
 VOLUME /usr/share/nginx/html
