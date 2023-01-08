@@ -4,6 +4,7 @@ FROM 'nginx:latest'
 RUN service nginx start
 
 # localのsrc配下をファイルをdockerコンテナ上の/usr/share/nginx/html配下にcopyする。
-COPY src /usr/share/nginx/html/service01
+# xxxxxの部分のアプリケーションロードバランサのパスに合わせる。
+COPY src /usr/share/nginx/html/xxxxx
 
 VOLUME /usr/share/nginx/html
