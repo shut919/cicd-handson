@@ -7,8 +7,8 @@ phases:
       # 環境変数の設定
       - AWS_ACCOUNT_ID=226972702386
       - ECR_URI=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
-      - REPOSITORY_URI=${ECR_URI}/cicd-handson-ecr02
-      - CONTAINER_NAME=cicd-container02
+      - REPOSITORY_URI=${ECR_URI}/cicd-handson-ecr01
+      - CONTAINER_NAME=cicd-container01
       # コミットハッシュの先頭7桁をタグに利用する
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
