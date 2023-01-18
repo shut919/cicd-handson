@@ -8,9 +8,9 @@ phases:
       - AWS_ACCOUNT_ID=226972702386
       - ECR_URI=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
       # ECRのリポジトリ名を指定
-      - REPOSITORY_URI=${ECR_URI}/cicd-handson-ecr02
+      - REPOSITORY_URI=${ECR_URI}/cicd-handson-ecr01
       # dockerのコンテナ名を指定
-      - CONTAINER_NAME=cicd-container02
+      - CONTAINER_NAME=cicd-container01
       # コミットハッシュの先頭7桁をdocker imageのタグに利用する
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
